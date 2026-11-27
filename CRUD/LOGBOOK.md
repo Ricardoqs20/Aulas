@@ -101,3 +101,56 @@ A IA me explicou que eu deveria colocar cada pergunta dentro de um laço de repe
   Descartei a sugestão da IA de criar funções com `def` e de usar comandos mais avançados para juntar as opções.
 * **Argumento técnico com base em testes e no aprendizado:**
   Descartei o uso de funções e comandos avançados porque na disciplina estamos focados em dominar primeiro a lógica pura de variáveis, condicionais (`if/elif/else`) e repetições (`while`). Testei o código usando apenas variáveis simples e laços `while` e comprovei que ele funciona perfeitamente sem precisar de nada complexo, mantendo a execução linear e fácil de explicar na defesa técnica sem misturar conteúdos que ainda não domino.
+
+---
+
+## 📌 GRUPO 3 (Prazo: Quinta 26/11 · 23h59)
+
+### Campo 05 — Revisão por pares (2 colegas)
+
+#### Revisão 1 — Projeto do colega: Kenzo
+* **Pontos positivos observados:** No sistema do Kenzo, gostei bastante de como ele organizou os textos do menu com `print()` e da forma como manteve o programa ativo em ciclo contínuo usando `while True:` com `break` apenas na opção de saída.
+* **Falha técnica identificada:** Ao testar o fluxo dele, vi que em um dos menus ele colocou vários `if` soltos em sequência sem usar `elif`. Por causa disso, o `else` lá de baixo acabava disparando `"Opção inválida"` mesmo quando eu digitava uma das primeiras opções certas. Também faltou um `else` dentro de um submenu para impedir que o usuário avançasse ao digitar um número inexistente.
+* **Minha recomendação:** Indiquei transformar os `if` soltos em uma estrutura `if-elif-else` encadeada e adicionar o `else` sem `break` dentro do `while True`, garantindo que o looping repita a pergunta até receber um número válido (*Pense em Python*, Cap. 5 e Cap. 7).
+
+#### Revisão 2 — Projeto do colega: Gustavo
+* **Análise geral do código:** O Gustavo já estruturou corretamente a árvore de decisões com `if-elif-else` e deixou bem intuitivo o passo a passo das escolhas no terminal.
+* **Bugs encontrados nos testes:** Identifiquei dois problemas diferentes do código do Kenzo. Primeiro, em uma das entradas ele usou `input()` direto sem `int()` e comparou com número (`== 1`), o que falhava sempre porque `input()` retorna texto (`str`). Segundo, ele reaproveitou a mesma variável para ler duas respostas seguidas, fazendo o segundo `input()` apagar o valor da primeira escolha antes de exibir o resumo.
+* **Ajuste proposto:** Orientei aplicar `int(input(...))` para converter a entrada para número inteiro antes da comparação (*Pense em Python*, Cap. 2 — Variáveis e conversão de tipos) e declarar uma variável própria para cada resposta que precisa ser guardada.
+
+---
+
+### Campo 06 — Próximos passos
+
+#### 6a. O que eu defendo na minha solução (`Hamburgueria.py`):
+Defendo que meu programa entrega um fluxo interativo completo de pedidos e montagem personalizada de hambúrguer no terminal utilizando exclusivamente os fundamentos base da disciplina: variáveis simples, conversão de tipos com `int(input())`, condicionais encadeadas (`if-elif-else`) e laços de repetição aninhados (`while True` com `break`). Cada etapa da montagem (pão, carne e acompanhamentos) é isolada em seu próprio laço de validação, garantindo que o cliente não avance com uma opção numérica inválida.
+
+#### 6b. O que falta melhorar (limites que reconheço):
+Reconheço três limites claros na versão atual do `Hamburgueria.py`:
+1. **Entradas não numéricas:** Se o usuário digitar uma letra ou pressionar *Enter* vazio no `int(input())`, o programa encerra com `ValueError`, pois ainda não há tratamento de erro para caracteres não numéricos.
+2. **Repetição de código nos acompanhamentos:** Na opção de 2 ou 3 acompanhamentos, repeti os blocos de `while True` e `if/elif` para cada escolha (`opcao_acompanhamento1` até `opcao_acompanhamento6`), deixando o código mais longo.
+3. **Limitação de variáveis simples:** Como o código usa apenas variáveis simples em memória, as escolhas não ficam armazenadas em um histórico persistente nem permitem editar ou excluir pedidos depois que o programa fecha.
+
+#### 6c. Qual pergunta difícil a banca fará e como respondo:
+* **Pergunta provável da banca:** *"Por que você repetiu o mesmo bloco de laço várias vezes para os acompanhamentos em vez de usar um único looping, e o que acontece se o usuário digitar uma letra no menu?"*
+* **Minha resposta:** Eu repeti os blocos porque, usando apenas variáveis simples, se eu reaproveitasse a mesma variável dentro de um único looping, cada nova resposta com `input()` sobrescreveria a escolha anterior na memória. Separar em variáveis diferentes (`opcao_acompanhamento2`, `opcao_acompanhamento3`, etc.) garantiu que nenhuma escolha fosse perdida. Quanto a digitar uma letra, reconheço o limite: o `int(input())` gera um `ValueError` porque letras não podem ser convertidas para inteiro na base 10; na versão atual eu trato apenas números fora do intervalo válido usando a cláusula `else` dentro do `while True`.
+
+---
+
+### Campo 07 — Evolução conceitual
+
+#### 7a. Retomando o Campo 01 (de onde saí até onde cheguei):
+No Campo 01, eu achava que `input()` identificava números sozinho, que bastava empilhar vários `if` e `else` e que o menu voltava para o início automaticamente. Hoje, ao concluir o ciclo, sei exatamente que `input()` sempre devolve texto (`str`), que condicionais independentes causam erro lógico no `else` final (exigindo `if-elif-else`), e que um menu contínuo depende de `while True:` com `break` apenas na condição de saída.
+
+#### 7b. Domínio dos objetos de conhecimento mobilizados:
+Consolidei o domínio prático de quatro pilares da programação estruturada (referenciados em *Pense em Python*, Capítulos 1, 2, 5 e 7):
+1. **Variáveis, tipos e coerção (`int()`, `str`, `input()`, `print()`):** Entendimento do tipo retornado pela entrada padrão e da necessidade de conversão explícita antes de comparações numéricas.
+2. **Estruturas condicionais (`if-elif-else`):** Uso de ramificações mutuamente exclusivas e da cláusula residual `else` como barreira de validação.
+3. **Laços de repetição (`while True`) e escopo do `break`:** Compreensão de que o `break` encerra apenas o laço mais interno (*inner loop*), permitindo construir submenus em sequência sem quebrar o laço principal.
+4. **Atribuição e preservação de estado em variáveis simples:** Controle de variáveis distintas para evitar que novas leituras apaguem escolhas anteriores.
+
+#### 7c. Principal erro corrigido durante o processo:
+O erro mais marcante que identifiquei e corrigi foi o uso de condicionais não encadeadas e o posicionamento errado do `break`: no início, a mensagem de `"Opção inválida"` aparecia mesmo em escolhas válidas, ou o `break` fechava o programa inteiro em vez de apenas sair de um submenu. Corrigi estruturando `if-elif-else` corretamente e confinando cada etapa em seu próprio `while True`.
+
+#### 7d. Transferência para um contexto novo:
+Se eu precisasse desenvolver hoje outro sistema de terminal totalmente diferente — como um **caixa eletrônico** ou um **sistema de votação** — eu aplicaria a mesma lógica estruturada: um laço `while True` principal para manter o menu aberto até a opção de saída (`break`), conversão `int(input())` nas opções, `if-elif-else` para separar cada operação com `else` de erro para entradas inválidas, e laços internos isolados com variáveis próprias para etapas obrigatórias (como confirmar o número do candidato ou escolher o tipo de operação) antes de retornar ao menu inicial.
